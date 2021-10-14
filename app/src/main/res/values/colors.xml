@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="light_green_50">#F1F8E9</color>
+    <color name="light_green_100">#DCEDC8</color>
     <color name="light_green_200">#C5E1A5</color>
+    <color name="light_green_300">#AED581</color>
+    <color name="light_green_400">#9CCC65</color>
     <color name="light_green_500">#8BC34A</color>
     <color name="light_green_700">#689F38</color>
+    <color name="light_green_900">#33691E</color>
     <color name="light_blue_200">#81D4FA</color>
     <color name="light_blue_700">#0288D1</color>
     <color name="deep_orange">#FF3D00</color>

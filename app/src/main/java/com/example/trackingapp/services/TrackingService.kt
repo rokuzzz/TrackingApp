@@ -5,7 +5,7 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.NotificationManager.IMPORTANCE_LOW
 import android.app.PendingIntent
-import android.app.PendingIntent.*
+import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
 import android.location.Location
@@ -18,7 +18,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.trackingapp.R
 import com.example.trackingapp.other.Constants.ACTION_PAUSE_SERVICE
-import com.example.trackingapp.other.Constants.ACTION_SHOW_TRACKING_FRAGMENT
 import com.example.trackingapp.other.Constants.ACTION_START_OR_RESUME_SERVICE
 import com.example.trackingapp.other.Constants.ACTION_STOP_SERVICE
 import com.example.trackingapp.other.Constants.FASTEST_LOCATION_INTERVAL
@@ -28,7 +27,6 @@ import com.example.trackingapp.other.Constants.NOTIFICATION_CHANNEL_NAME
 import com.example.trackingapp.other.Constants.NOTIFICATION_ID
 import com.example.trackingapp.other.Constants.TIMER_UPDATE_INTERVAL
 import com.example.trackingapp.other.TrackingUtility
-import com.example.trackingapp.ui.MainActivity
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
