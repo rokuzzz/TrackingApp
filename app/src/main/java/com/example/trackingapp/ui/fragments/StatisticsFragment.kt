@@ -1,15 +1,24 @@
 package com.example.trackingapp.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.trackingapp.R
+import com.example.trackingapp.other.CustomMarkerView
 import com.example.trackingapp.other.TrackingUtility
 import com.example.trackingapp.ui.viewmodels.StatisticsViewModel
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.google.ar.core.dependencies.i
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_statistics.*
+import java.security.acl.Owner
 import kotlin.math.round
 
 @AndroidEntryPoint
@@ -21,7 +30,34 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribeToObservers()
+        setupBarChart()
     }
+
+    private fun setupBarChart() {
+        barChart.xAxis.apply {
+            position = XAxis.XAxisPosition.BOTTOM
+            setDrawLabels(false)
+            axisLineColor = Color.BLACK
+            textColor = Color.BLACK
+            setDrawGridLines(false)
+        }
+        barChart.axisLeft.apply {
+            axisLineColor = Color.BLACK
+            textColor= Color.BLACK
+            setDrawGridLines(false)
+        }
+        barChart.axisRight.apply {
+            axisLineColor = Color.BLACK
+            textColor= Color.BLACK
+            setDrawGridLines(false)
+        }
+        barChart.apply {
+            description.text = "Avg Speed Over Time"
+            legend.isEnabled = false
+        }
+    }
+
+
     private fun subscribeToObservers() {
         viewModel.totalTimeRun.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -48,6 +84,18 @@ class StatisticsFragment : Fragment(R.layout.fragment_statistics) {
             it?.let {
                 val totalCalories = "${it}kcal"
                 tvTotalCalories.text = totalCalories
+            }
+        })
+        viewModel.runsSortedByDate.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val allAvgSpeed = it.indices.map { i -> BarEntry(i.toFloat(), it[i].avgSpeedInKMH) }
+                val barDataSet = BarDataSet(allAvgSpeed, "Avg Speed Over Time").apply {
+                    valueTextColor = Color.BLACK
+                    color = ContextCompat.getColor(requireContext(), R.color.red_300)
+                }
+                barChart.data = BarData(barDataSet)
+                barChart.marker = CustomMarkerView(it.reversed(), requireContext(), R.layout.marker_view)
+                barChart.invalidate()
             }
         })
     }
